@@ -19,9 +19,16 @@
             Panel Administrador
         </h2>
 
-        <a href="/logout" class="btn btn-danger">
-            Cerrar Sesión
-        </a>
+     
+<form action="{{ route('logout') }}" method="POST">
+    @csrf
+
+    <button type="submit" class="btn btn-danger">
+        Cerrar Sesión
+    </button>
+</form>
+
+
 
     </div>
 
