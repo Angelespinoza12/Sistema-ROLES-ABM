@@ -17,7 +17,10 @@ class UsuarioController extends Controller
 
         $usuarios = User::all();
 
-        return view('admin.dashboard', compact('usuarios'));
+       
+return view('admin', compact('usuarios'));
+
+
     }
 
     public function store(Request $request)
