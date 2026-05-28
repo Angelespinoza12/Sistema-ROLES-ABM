@@ -8,13 +8,10 @@ RUN apt-get update -y && apt-get install -y \
     git \
     curl
 
-# instalar extensiones PHP
 RUN docker-php-ext-install pdo pdo_mysql
 
-# habilitar rewrite
 RUN a2enmod rewrite
 
-# instalar composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
@@ -26,8 +23,17 @@ WORKDIR /var/www/html
 
 COPY . .
 
-# 🔥 ESTO ES LO QUE TE FALTABA
+# instalar dependencias
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+# 🔥 FIX CRÍTICO LARAVEL
+RUN mkdir -p storage/framework/{cache,sessions,views} bootstrap/cache
+RUN chmod -R 777 storage bootstrap/cache
+
+# limpiar cache por si acaso
+RUN php artisan config:clear || true
+RUN php artisan cache:clear || true
+RUN php artisan route:clear || true
 
 RUN chown -R www-data:www-data /var/www/html
 
