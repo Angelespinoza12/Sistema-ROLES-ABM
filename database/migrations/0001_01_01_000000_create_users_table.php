@@ -9,24 +9,32 @@ return new class extends Migration
    public function up(): void
 {
     Schema::create('users', function (Blueprint $table) {
-        $table->id();
 
-        $table->string('name');
-        $table->string('email')->unique();
-        $table->string('username')->unique();
+    $table->id();
 
-        $table->string('role')->default('usuario');
+    $table->string('nombre');
+    $table->string('email')->unique();
 
-        $table->string('telefono')->nullable();
-        $table->string('cargo')->nullable();
-        $table->string('universidad')->nullable();
-        $table->string('aula')->nullable();
-        $table->string('semestre')->nullable();
+    $table->string('usuario')->unique();
 
-        $table->string('password');
+    $table->string('rol');
 
-        $table->timestamps();
-    });
+    $table->string('ci')->nullable();
+
+    $table->string('cargo')->nullable();
+
+    $table->string('universidad')->nullable();
+
+    $table->string('aula')->nullable();
+
+    $table->string('semestre')->nullable();
+
+    $table->string('password');
+
+    $table->rememberToken();
+
+    $table->timestamps();
+});
 
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
