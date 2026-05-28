@@ -9,114 +9,70 @@ use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
-
     public function index()
     {
-
-        if(Auth::user()->role != 'admin'){
-
+        if (Auth::user()->rol != 'admin') {
             return redirect('/perfil');
         }
 
         $usuarios = User::all();
 
-        return view('admin', compact('usuarios'));
+        return view('admin.dashboard', compact('usuarios'));
     }
 
     public function store(Request $request)
     {
-
         $request->validate([
-
             'name' => 'required',
-
             'email' => 'required|email|unique:users',
-
             'username' => 'required|unique:users',
-
             'password' => 'required|min:8',
-
         ]);
 
         User::create([
-
             'name' => $request->name,
-
             'email' => $request->email,
-
             'username' => $request->username,
-
-            'role' => $request->role,
-
+            'rol' => $request->rol, // 👈 IMPORTANTE
             'telefono' => $request->telefono,
-
             'cargo' => $request->cargo,
-
             'universidad' => $request->universidad,
-
             'aula' => $request->aula,
-
             'semestre' => $request->semestre,
-
             'password' => Hash::make($request->password)
-
         ]);
 
-        return redirect('/admin')
-        ->with('success', 'Usuario creado correctamente');
-    }
-
-    public function edit($id)
-    {
-
-        $usuario = User::findOrFail($id);
-
-        return view('editar', compact('usuario'));
+        return redirect('/admin')->with('success', 'Usuario creado correctamente');
     }
 
     public function update(Request $request, $id)
     {
-
         $user = User::findOrFail($id);
 
         $user->update([
-
             'name' => $request->name,
-
             'email' => $request->email,
-
             'username' => $request->username,
-
-            'role' => $request->role,
-
+            'rol' => $request->rol, // 👈 IMPORTANTE
             'telefono' => $request->telefono,
-
             'cargo' => $request->cargo,
-
             'universidad' => $request->universidad,
-
             'aula' => $request->aula,
-
             'semestre' => $request->semestre,
-
         ]);
 
-        return redirect('/admin')
-        ->with('success', 'Usuario actualizado correctamente');
+        return redirect('/admin')->with('success', 'Usuario actualizado correctamente');
     }
 
     public function destroy($id)
     {
-
         User::destroy($id);
 
-        return redirect('/admin')
-        ->with('success', 'Usuario eliminado correctamente');
+        return redirect('/admin')->with('success', 'Usuario eliminado correctamente');
     }
 
     public function perfil()
     {
-
         return view('perfil');
     }
 }

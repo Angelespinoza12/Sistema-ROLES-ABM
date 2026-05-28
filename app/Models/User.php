@@ -11,33 +11,28 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-
-        'name',
+        'nombre',
         'email',
-        'username',
-        'role',
+        'usuario',
+        'rol',
         'telefono',
         'cargo',
         'universidad',
         'aula',
         'semestre',
         'password',
-
     ];
-    protected $hidden = [
 
+    protected $hidden = [
         'password',
         'remember_token',
-
     ];
+
     protected function casts(): array
     {
         return [
-
             'email_verified_at' => 'datetime',
-
             'password' => 'hashed',
-
         ];
     }
 }

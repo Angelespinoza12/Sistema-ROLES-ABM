@@ -139,7 +139,7 @@
                     </span>
 
                     <input type="text"
-                        name="username"
+                        name="usuario"
                         class="form-control"
                         placeholder="Usuario"
                         required>
