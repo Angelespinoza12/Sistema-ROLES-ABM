@@ -60,10 +60,6 @@ RUN php artisan config:clear || true
 RUN php artisan route:clear || true
 RUN php artisan view:clear || true
 
-# IMPORTANTE:
-# NO usar config:cache
-# NO usar migrate
-
 # =========================
 # PERMISOS
 # =========================
@@ -81,4 +77,12 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
     /etc/apache2/apache2.conf \
     /etc/apache2/conf-available/*.conf
 
+# =========================
+# PUERTO
+# =========================
 EXPOSE 80
+
+# =========================
+# START APP
+# =========================
+CMD php artisan migrate --force && apache2-foreground
