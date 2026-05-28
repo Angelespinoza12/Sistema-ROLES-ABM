@@ -14,6 +14,7 @@ RUN a2enmod rewrite
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# 🔥 IMPORTANTE: apuntar a public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
@@ -23,17 +24,22 @@ WORKDIR /var/www/html
 
 COPY . .
 
-# instalar dependencias
+# instalar dependencias Laravel
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# 🔥 FIX CRÍTICO LARAVEL
-RUN mkdir -p storage/framework/{cache,sessions,views} bootstrap/cache
+# 🔥 FIX CRÍTICO PARA RENDER
+RUN mkdir -p storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    bootstrap/cache
+
 RUN chmod -R 777 storage bootstrap/cache
 
-# limpiar cache por si acaso
+# limpiar caches Laravel
 RUN php artisan config:clear || true
 RUN php artisan cache:clear || true
 RUN php artisan route:clear || true
+RUN php artisan view:clear || true
 
 RUN chown -R www-data:www-data /var/www/html
 
