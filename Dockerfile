@@ -17,18 +17,10 @@ RUN apt-get update -y && apt-get install -y \
 RUN docker-php-ext-install pdo pdo_mysql
 
 # =========================
-# APACHE REWRITE
+# APACHE
 # =========================
 RUN a2enmod rewrite
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-
-# =========================
-# APACHE PUBLIC ROOT
-# =========================
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # =========================
 # COMPOSER
@@ -46,7 +38,7 @@ WORKDIR /var/www/html
 COPY . .
 
 # =========================
-# CREAR CARPETAS
+# STORAGE
 # =========================
 RUN mkdir -p bootstrap/cache \
     storage/framework/cache \
@@ -56,31 +48,37 @@ RUN mkdir -p bootstrap/cache \
 RUN chmod -R 777 bootstrap/cache storage
 
 # =========================
-# DEPENDENCIAS LARAVEL
+# COMPOSER INSTALL
 # =========================
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
 # =========================
-# LIMPIEZA LARAVEL
+# LIMPIAR CACHE
 # =========================
 RUN php artisan optimize:clear || true
 RUN php artisan config:clear || true
 RUN php artisan route:clear || true
 RUN php artisan view:clear || true
 
-# =========================
-# MIGRACIONES
-# =========================
-RUN php artisan migrate --force || true
-
-# =========================
-# CACHE FINAL
-# =========================
-RUN php artisan config:cache || true
+# IMPORTANTE:
+# NO usar config:cache
+# NO usar migrate
 
 # =========================
 # PERMISOS
 # =========================
 RUN chown -R www-data:www-data /var/www/html
+
+# =========================
+# APACHE ROOT
+# =========================
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/sites-available/*.conf
+
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/apache2.conf \
+    /etc/apache2/conf-available/*.conf
 
 EXPOSE 80
