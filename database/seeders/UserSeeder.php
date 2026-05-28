@@ -11,21 +11,24 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // ADMIN
-        User::updateOrCreate(
-            ['usuario' => 'admin'],
-            [
-                'name' => 'Administrador',
-                'email' => 'admin@gmail.com',
-                'password' => Hash::make('Admin123*'),
-                'rol' => 'admin',
+    
+User::updateOrCreate(
+    ['usuario' => 'admin'],
+    [
+        'name' => 'Administrador',
+        'email' => 'admin@gmail.com',
+        'password' => bcrypt('12345678'),
+        'rol' => 'admin',
 
-                'telefono' => '70000001',
-                'cargo' => 'Administrador',
-                'universidad' => 'Universidad Salesiana de Bolivia',
-                'aula' => 'Central',
-                'semestre' => 'Administración',
-            ]
-        );
+        'telefono' => '70000000',
+        'cargo' => 'Administrador',
+        'universidad' => 'Universidad Salesiana',
+        'aula' => 'Central',
+        'semestre' => 'Administracion',
+    ]
+);
+
+
 
         // JUAN
         User::updateOrCreate(
@@ -94,6 +97,24 @@ class UserSeeder extends Seeder
                 'semestre' => '7mo Semestre',
             ]
         );
+       
+User::updateOrCreate(
+    ['usuario' => 'admin2'],
+    [
+        'name' => 'Administrador 2',
+        'email' => 'admin2@gmail.com',
+        'password' => bcrypt('12345678'),
+        'rol' => 'admin',
+
+        'telefono' => '77777777',
+        'cargo' => 'Administrador',
+        'universidad' => 'Universidad Salesiana',
+        'aula' => 'Central',
+        'semestre' => 'Admin',
+    ]
+);
+
+
     }
 }
 
