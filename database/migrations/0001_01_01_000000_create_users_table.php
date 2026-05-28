@@ -8,31 +8,24 @@ return new class extends Migration
 {
    public function up(): void
 {
-    Schema::create('users', function (Blueprint $table) {
-
+   Schema::create('users', function (Blueprint $table) {
     $table->id();
 
-    $table->string('nombre');
+    $table->string('name');
     $table->string('email')->unique();
-
     $table->string('usuario')->unique();
 
     $table->string('rol');
 
-    $table->string('ci')->nullable();
-
+    $table->string('telefono')->nullable();
     $table->string('cargo')->nullable();
-
     $table->string('universidad')->nullable();
-
     $table->string('aula')->nullable();
-
     $table->string('semestre')->nullable();
 
     $table->string('password');
 
     $table->rememberToken();
-
     $table->timestamps();
 });
 

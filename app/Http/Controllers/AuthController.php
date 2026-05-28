@@ -7,23 +7,22 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    // LOGIN
     public function login(Request $request)
     {
         $request->validate([
             'usuario' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        $credentials = [
+        if (Auth::attempt([
             'usuario' => $request->usuario,
             'password' => $request->password
-        ];
-
-        if (Auth::attempt($credentials)) {
+        ])) {
 
             $request->session()->regenerate();
 
-            if (Auth::user()->rol === 'admin') {
+            if (Auth::user()->rol == 'admin') {
                 return redirect('/admin');
             }
 
@@ -35,10 +34,13 @@ class AuthController extends Controller
         ]);
     }
 
+    // LOGOUT
     public function logout(Request $request)
     {
         Auth::logout();
+
         $request->session()->invalidate();
+
         $request->session()->regenerateToken();
 
         return redirect('/login');

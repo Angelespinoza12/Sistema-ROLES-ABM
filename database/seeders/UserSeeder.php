@@ -10,56 +10,90 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-    
+        // ADMIN
         User::updateOrCreate(
-            ['email' => 'admin@gmail.com'],
+            ['usuario' => 'admin'],
             [
-                'nombre' => 'Administrador Principal',
-                'usuario' => 'admin',
+                'name' => 'Administrador',
+                'email' => 'admin@gmail.com',
                 'password' => Hash::make('Admin123*'),
-                'rol' => 'admin'
+                'rol' => 'admin',
+
+                'telefono' => '70000001',
+                'cargo' => 'Administrador',
+                'universidad' => 'Universidad Salesiana de Bolivia',
+                'aula' => 'Central',
+                'semestre' => 'Administración',
             ]
         );
 
-
+        // JUAN
         User::updateOrCreate(
-            ['email' => 'user1@gmail.com'],
+            ['usuario' => 'juan'],
             [
-                'nombre' => 'Usuario Uno',
-                'usuario' => 'user1',
-                'password' => Hash::make('123456'),
-                'rol' => 'user'
+                'name' => 'Juan Perez',
+                'email' => 'juan@gmail.com',
+                'password' => Hash::make('12345678'),
+                'rol' => 'usuario',
+
+                'telefono' => '77711111',
+                'cargo' => 'Estudiante',
+                'universidad' => 'USB',
+                'aula' => '201',
+                'semestre' => '5to',
             ]
         );
 
+        // MARIA
         User::updateOrCreate(
-            ['email' => 'user2@gmail.com'],
+            ['usuario' => 'maria'],
             [
-                'nombre' => 'Usuario Dos',
-                'usuario' => 'user2',
-                'password' => Hash::make('123456'),
-                'rol' => 'user'
+                'name' => 'Maria Lopez',
+                'email' => 'maria@gmail.com',
+                'password' => Hash::make('12345678'),
+                'rol' => 'usuario',
+
+                'telefono' => '77722222',
+                'cargo' => 'Estudiante',
+                'universidad' => 'USB',
+                'aula' => '305',
+                'semestre' => '6to',
             ]
         );
 
+        // CARLOS
         User::updateOrCreate(
-            ['email' => 'user3@gmail.com'],
+            ['usuario' => 'carlos'],
             [
-                'nombre' => 'Usuario Tres',
-                'usuario' => 'user3',
-                'password' => Hash::make('123456'),
-                'rol' => 'user'
+                'name' => 'Carlos Rojas',
+                'email' => 'carlos@gmail.com',
+                'password' => Hash::make('12345678'),
+                'rol' => 'usuario',
+
+                'telefono' => '77733333',
+                'cargo' => 'Auxiliar',
+                'universidad' => 'USB',
+                'aula' => 'Laboratorio',
+                'semestre' => '8vo',
             ]
         );
 
+        // OMAR
         User::updateOrCreate(
-            ['email' => 'omar@gmail.com'],
+            ['usuario' => 'omarqm'],
             [
-                'nombre' => 'omarqm',
-                'usuario' => 'omarqm',
+                'name' => 'Omar',
+                'email' => 'omar@gmail.com',
                 'password' => Hash::make('Omar411*'),
-                'rol' => 'user'
+                'rol' => 'usuario',
+
+                'telefono' => '77224954',
+                'cargo' => 'DOCENTE',
+                'universidad' => 'Universidad Salesiana de Bolivia',
+                'aula' => '111',
+                'semestre' => '7mo Semestre',
             ]
         );
     }
 }
+
