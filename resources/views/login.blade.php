@@ -137,13 +137,16 @@
                         <i class="bi bi-lock-fill"></i>
                     </span>
 
-                    <input
-                        type="password"
-                        name="password"
-                        class="form-control"
-                        placeholder="Contraseña"
-                        required
-                    >
+        
+<input type="password"
+    name="password"
+    class="form-control"
+    placeholder="Contraseña"
+    maxlength="8"
+    minlength="8"
+    pattern=".{8}"
+    title="La contraseña debe tener exactamente 8 caracteres"
+    required>
 
                 </div>
 
