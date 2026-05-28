@@ -60,6 +60,8 @@ RUN php artisan config:clear || true
 RUN php artisan cache:clear || true
 RUN php artisan route:clear || true
 RUN php artisan view:clear || true
+RUN php artisan optimize:clear || true
+RUN php artisan config:cache || true
 
 # =========================
 # PERMISOS FINALES
