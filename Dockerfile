@@ -23,6 +23,14 @@ RUN a2enmod rewrite
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # =========================
+# APACHE PUBLIC ROOT
+# =========================
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+# =========================
 # COMPOSER
 # =========================
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -37,7 +45,9 @@ WORKDIR /var/www/html
 # =========================
 COPY . .
 
-# 🔥 CRÍTICO: crear carpetas ANTES de composer
+# =========================
+# CREAR CARPETAS
+# =========================
 RUN mkdir -p bootstrap/cache \
     storage/framework/cache \
     storage/framework/sessions \
@@ -59,21 +69,18 @@ RUN php artisan route:clear || true
 RUN php artisan view:clear || true
 
 # =========================
-# OPTIMIZAR CONFIG
+# MIGRACIONES
+# =========================
+RUN php artisan migrate --force || true
+
+# =========================
+# CACHE FINAL
 # =========================
 RUN php artisan config:cache || true
 
 # =========================
-# PERMISOS FINALES
+# PERMISOS
 # =========================
 RUN chown -R www-data:www-data /var/www/html
-
-# =========================
-# APACHE PUBLIC ROOT
-# =========================
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 EXPOSE 80
