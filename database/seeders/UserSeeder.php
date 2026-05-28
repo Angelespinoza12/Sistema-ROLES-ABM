@@ -17,16 +17,19 @@ User::updateOrCreate(
     [
         'name' => 'Administrador',
         'email' => 'admin@gmail.com',
+
         'password' => bcrypt('12345678'),
+
         'rol' => 'admin',
 
-        'telefono' => '70000000',
+        'telefono' => '77777777',
         'cargo' => 'Administrador',
         'universidad' => 'Universidad Salesiana',
         'aula' => 'Central',
-        'semestre' => 'Administracion',
+        'semestre' => 'Admin',
     ]
 );
+
 
 
 
